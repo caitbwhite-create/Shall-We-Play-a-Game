@@ -5,19 +5,14 @@ import time
 # --- Setup Screen ---
 screen = turtle.Screen()
 screen.setup(width=600, height=800)
-screen.bgcolor("forestgreen")
-screen.title("Crossy Road Python")
+screen.bgcolor("yellowgreen")
 screen.tracer(0) 
 
 # --- Register Shapes ---
-try:
-    screen.addshape("chicken.gif")
-    screen.addshape("car1.gif")
-    screen.addshape("train.gif")
-    use_custom_icons = True
-except:
-    use_custom_icons = False
-    print("GIF files not found. Using default shapes.")
+
+screen.addshape("chicken.gif")
+screen.addshape("car1.gif")
+screen.addshape("train.gif")
 
 # --- Drawing the Background ---
 bg = turtle.Turtle()
@@ -63,11 +58,7 @@ for x in range(-280, 300, 40):
 # --- The Player (Chicken) ---
 player = turtle.Turtle()
 player.penup()
-if use_custom_icons:
-    player.shape("chicken.gif")
-else:
-    player.shape("triangle")
-    player.color("orange")
+player.shape("chicken.gif")
 player.goto(0, -350)
 player.setheading(90)
 
@@ -102,12 +93,7 @@ trains = []
 def create_car(y_pos):
     new_car = turtle.Turtle()
     new_car.penup()
-    if use_custom_icons:
-        new_car.shape("car1.gif")
-    else:
-        new_car.shape("square")
-        new_car.shapesize(stretch_wid=2, stretch_len=3)
-        new_car.color("red")
+    new_car.shape("car1.gif")
     
     start_x = random.choice([-350, 350])
     new_car.goto(start_x, y_pos + 50)
@@ -117,12 +103,8 @@ def create_car(y_pos):
 def create_train(y_pos):
     new_train = turtle.Turtle()
     new_train.penup()
-    if use_custom_icons:
-        new_train.shape("train.gif")
-    else:
-        new_train.shape("square")
-        new_train.shapesize(stretch_wid=2, stretch_len=8)
-        new_train.color("gray")
+    new_train.shape("train.gif")
+
     
     new_train.goto(-400, y_pos - 175)
     new_train.speed_val = 12 # Trains move fast
@@ -159,12 +141,11 @@ while True:
         if t.xcor() > 600:
             t.goto(-800, t.ycor())
 
-        # Improved Collision Detection for long objects:
-        # Check if chicken is vertically close AND horizontally within the train's length
+
         x_dist = abs(t.xcor() - player.xcor())
         y_dist = abs(t.ycor() - player.ycor())
         
-        # If using default shapes (stretch_len=8), the train is about 160 pixels wide
+
         if x_dist < 80 and y_dist < 30: 
             show_message("Smushed by a train!")
             player.goto(0, -350)
